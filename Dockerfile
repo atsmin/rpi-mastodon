@@ -18,6 +18,7 @@ ADD https://github.com/tootsuite/mastodon/archive/v${MASTODON_VERSION}.tar.gz .
 RUN tar -xvf v${MASTODON_VERSION}.tar.gz \
  && mkdir -p /tmp/mastodon/build/ \
  && mv mastodon-*/* /tmp/mastodon/build/ \
+ && mv mastodon-*/.[^\.]* /tmp/mastodon/build/ \
  && rm -f v${MASTODON_VERSION}.tar.gz \
 
 WORKDIR /mastodon
@@ -53,6 +54,7 @@ RUN cp /tmp/mastodon/build/Gemfile . \
  && apk del build-dependencies \
  && rm -rf /var/cache/apk/* \
  && cp -r /tmp/mastodon/build/* . \
+ && cp -r /tmp/mastodon/build/.[^\.]* . \
  && rm -rf /tmp/mastodon/
 
 VOLUME /mastodon/public/system /mastodon/public/assets
